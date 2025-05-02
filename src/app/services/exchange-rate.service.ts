@@ -13,4 +13,9 @@ export class ExchangeRateService {
   getExchangeRates(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  getHistoricalData(): Observable<any> {
+    return this.http.get('http://localhost:3000/historical-data');
+  }
+  
 }
