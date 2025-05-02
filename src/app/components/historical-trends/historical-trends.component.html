@@ -1,5 +1,17 @@
 <div class="historical-trends-container">
   <h2>Historical Exchange Rate Trends</h2>
 
+  <div class="controls">
+    <label>
+      Base Currency:
+      <input type="text" [(ngModel)]="baseCurrency" />
+    </label>
+    <label>
+      Target Currency:
+      <input type="text" [(ngModel)]="targetCurrency" />
+    </label>
+    <button (click)="loadHistoricalData()">Load</button>
+  </div>
+
   <canvas id="historicalChart"></canvas>
 </div>
