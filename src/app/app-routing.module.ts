@@ -5,11 +5,10 @@ import { HistoricalTrendsComponent } from './components/historical-trends/histor
 import { CurrencyConverterComponent } from './components/currency-converter/currency-converter.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'exchange-rates', pathMatch: 'full' },
   { path: 'exchange-rates', component: ExchangeRatesComponent },
   { path: 'historical-trends', component: HistoricalTrendsComponent },
   { path: 'currency-converter', component: CurrencyConverterComponent },
-  { path: '**', redirectTo: 'exchange-rates' }
+  { path: '', redirectTo: '/exchange-rates', pathMatch: 'full' },
 ];
 
 @NgModule({
