@@ -7,6 +7,8 @@ const PORT = 3000;
 
 app.use(cors());
 
+
+// TODO: Move the API key to an environment variable for better security or masking it
 const API_KEY = 'fc2e95532c33f61156ee5fbf';
 
 app.get('/exchange-rates', async (req, res) => {
