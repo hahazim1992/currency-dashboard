@@ -19,29 +19,37 @@ app.get('/exchange-rates', async (req, res) => {
   }
 });
 
-app.get('/historical', async (req, res) => {
-  const { base, target, date } = req.query;
+app.get('/historical-data', async (req, res) => {
+  const { base, targets, date } = req.query;
 
-  if (!base || !target || !date) {
+  // Log the received query parameters for debugging
+  console.log('Received query params:', { base, targets, date });
+
+  if (!base || !targets || !date) {
     return res.status(400).json({ error: 'Missing required query params' });
   }
 
   try {
+    // Map 'targets' to 'currencies' for the external API
     const response = await axios.get('https://api.freecurrencyapi.com/v1/historical', {
       params: {
         apikey: API_KEY_2,
-        date_from: date,
-        date_to: date,
+        date, // Use the single date directly
         base_currency: base,
-        currencies: target,
+        currencies: targets, // Map 'targets' to 'currencies'
       },
     });
 
-    const rate = response.data.data?.[date]?.[target];
-    if (rate) {
-      res.json({ date, rate });
+    const data = response.data.data?.[date];
+    if (data) {
+      const results = Object.keys(data).map((currency) => ({
+        date,
+        currency,
+        rate: data[currency],
+      }));
+      res.json(results);
     } else {
-      res.status(404).json({ error: 'Rate not found for the specified date' });
+      res.status(404).json({ error: 'No data found for the specified date' });
     }
   } catch (error) {
     console.error('Error fetching historical data:', error.response?.data || error.message);

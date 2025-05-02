@@ -1,17 +1,35 @@
 <div class="historical-trends-container">
-  <h2>Historical Exchange Rate Trends</h2>
+  <h2 class="title">Historical Exchange Rate Trends</h2>
 
-  <div class="controls">
-    <label>
-      Base Currency:
-      <input type="text" [(ngModel)]="baseCurrency" />
-    </label>
-    <label>
-      Target Currency:
-      <input type="text" [(ngModel)]="targetCurrency" />
-    </label>
-    <button (click)="loadHistoricalData()">Load</button>
+  <mat-card class="mat-elevation-z2">
+    <div class="controls">
+      <!-- Base Currency Input -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Base Currency</mat-label>
+        <input matInput type="text" [(ngModel)]="baseCurrency" placeholder="e.g., USD" />
+      </mat-form-field>
+
+      <!-- Target Currencies Input -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Target Currencies (comma-separated, max 3)</mat-label>
+        <input matInput type="text" [(ngModel)]="targetCurrenciesStr" placeholder="e.g., MYR,SGD" />
+      </mat-form-field>
+
+      <!-- Date Picker -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" [(ngModel)]="selectedDate" />
+      </mat-form-field>
+
+      <!-- Load Button -->
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="loadHistoricalData()">Load</button>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Chart Canvas -->
+  <div class="chart-container">
+    <canvas id="historicalChart"></canvas>
   </div>
-
-  <canvas id="historicalChart"></canvas>
 </div>

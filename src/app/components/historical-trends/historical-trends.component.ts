@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 import { Chart } from 'chart.js';
 
@@ -7,17 +7,16 @@ import { Chart } from 'chart.js';
   templateUrl: './historical-trends.component.html',
   styleUrls: ['./historical-trends.component.scss'],
 })
-export class HistoricalTrendsComponent implements OnInit, OnDestroy {
-  historicalData: any[] = [];
+export class HistoricalTrendsComponent implements OnDestroy {
+  baseCurrency = 'USD';
+  targetCurrenciesStr = 'MYR,SGD';
+  selectedDate: string; // Use a date instead of interval
   chart: any;
 
-  baseCurrency = 'USD';
-  targetCurrency = 'MYR';
-
-  constructor(private exchangeRateService: ExchangeRateService) {}
-
-  ngOnInit(): void {
-    this.loadHistoricalData();
+  constructor(private exchangeRateService: ExchangeRateService) {
+    // Default to today's date
+    const today = new Date();
+    this.selectedDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
   }
 
   ngOnDestroy(): void {
@@ -27,55 +26,48 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   }
 
   loadHistoricalData(): void {
-  const today = new Date();
-
-  const pastMonthDate = new Date();
-  pastMonthDate.setDate(today.getDate() - 30);
-  const pastDateStr = pastMonthDate.toISOString().split('T')[0];
-
-  this.exchangeRateService
-    .getHistoricalData(this.baseCurrency, this.targetCurrency, pastDateStr)
-    .subscribe((data) => {
-      this.historicalData = data;
-      this.renderChart();
+    const targets = this.targetCurrenciesStr.split(',').map((c) => c.trim()).slice(0, 3);
+  
+    if (!this.selectedDate) {
+      alert('Please select a date.');
+      return;
+    }
+  
+    this.exchangeRateService.getHistoricalData(this.baseCurrency, targets, this.selectedDate).subscribe((data) => {
+      this.renderChart(data);
     });
-}
+  }
 
-  renderChart(): void {
-    const dates = this.historicalData.map((entry) => entry.date);
-    const rates = this.historicalData.map((entry) => entry.rate);
+  renderChart(data: any): void {
+    const labels = data.map((d: any) => d.date);
+    const datasets = [
+      {
+        label: `${this.baseCurrency} → ${this.targetCurrenciesStr}`,
+        data: data.map((entry: any) => entry.rate),
+        borderColor: this.getRandomColor(),
+        fill: false,
+        tension: 0.3,
+      },
+    ];
 
     if (this.chart) {
-      this.chart.destroy(); // Prevent multiple overlapping charts
+      this.chart.destroy();
     }
 
     this.chart = new Chart('historicalChart', {
       type: 'line',
-      data: {
-        labels: dates,
-        datasets: [
-          {
-            label: `${this.baseCurrency} → ${this.targetCurrency}`,
-            data: rates,
-            borderColor: 'rgb(75, 192, 192)',
-            fill: false,
-            tension: 0.3,
-          },
-        ],
-      },
+      data: { labels, datasets },
       options: {
         responsive: true,
         scales: {
-          x: {
-            display: true,
-            title: { display: true, text: 'Date' },
-          },
-          y: {
-            display: true,
-            title: { display: true, text: 'Rate' },
-          },
+          x: { title: { display: true, text: 'Date' } },
+          y: { title: { display: true, text: 'Rate' } },
         },
       },
     });
+  }
+
+  getRandomColor(): string {
+    return `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
   }
 }

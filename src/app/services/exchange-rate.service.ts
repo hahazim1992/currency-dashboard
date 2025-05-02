@@ -22,8 +22,9 @@ export class ExchangeRateService {
   //   return this.http.get(url);
   // }
 
-  getHistoricalData(base: string, target: string, date: string): Observable<any> {
-    const url = `http://localhost:3000/historical-data?base=${base}&target=${target}&date=${date}`;
+  getHistoricalData(base: string, targets: string[], date: string): Observable<any> {
+    const targetStr = targets.join(',');
+    const url = `${this.apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`;
     console.log('Request URL:', url); // Debugging
     return this.http.get(url);
   }
