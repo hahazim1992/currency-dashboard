@@ -1,1 +1,34 @@
-<p>currency-converter works!</p>
+<div class="currency-converter-container">
+  <h2>Currency Converter</h2>
+
+  <div>
+    <label for="amount">Amount:</label>
+    <input [(ngModel)]="amount" id="amount" type="number" />
+  </div>
+
+  <div>
+    <label for="fromCurrency">From:</label>
+    <select [(ngModel)]="fromCurrency" id="fromCurrency">
+      <option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+        {{ currency.key }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="toCurrency">To:</label>
+    <select [(ngModel)]="toCurrency" id="toCurrency">
+      <option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+        {{ currency.key }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <button (click)="convert()">Convert</button>
+  </div>
+
+  <div *ngIf="convertedAmount !== null">
+    <h3>Converted Amount: {{ convertedAmount }}</h3>
+  </div>
+</div>
