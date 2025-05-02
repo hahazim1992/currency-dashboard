@@ -1,34 +1,38 @@
 <div class="currency-converter-container">
-  <h2>Currency Converter</h2>
+  <h2 class="title">Currency Converter</h2>
 
-  <div>
-    <label for="amount">Amount:</label>
-    <input [(ngModel)]="amount" id="amount" type="number" />
-  </div>
+  <mat-card class="mat-elevation-z2">
+    <div class="converter-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Amount</mat-label>
+        <input matInput [(ngModel)]="amount" id="amount" type="number" />
+      </mat-form-field>
 
-  <div>
-    <label for="fromCurrency">From:</label>
-    <select [(ngModel)]="fromCurrency" id="fromCurrency">
-      <option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
-        {{ currency.key }}
-      </option>
-    </select>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>From</mat-label>
+        <mat-select [(ngModel)]="fromCurrency" id="fromCurrency">
+          <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+            {{ currency.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <div>
-    <label for="toCurrency">To:</label>
-    <select [(ngModel)]="toCurrency" id="toCurrency">
-      <option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
-        {{ currency.key }}
-      </option>
-    </select>
-  </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>To</mat-label>
+        <mat-select [(ngModel)]="toCurrency" id="toCurrency">
+          <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+            {{ currency.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div>
-    <button (click)="convert()">Convert</button>
-  </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    </div>
 
-  <div *ngIf="convertedAmount !== null">
-    <h3>Converted Amount: {{ convertedAmount }}</h3>
-  </div>
+    <div *ngIf="convertedAmount !== null" class="result">
+      <h3>Converted Amount: {{ convertedAmount }}</h3>
+    </div>
+  </mat-card>
 </div>
