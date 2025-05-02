@@ -27,20 +27,19 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   }
 
   loadHistoricalData(): void {
-    const end = new Date();
-    const start = new Date();
-    start.setDate(end.getDate() - 30); // past 30 days
+  const today = new Date();
 
-    const startStr = start.toISOString().split('T')[0];
-    const endStr = end.toISOString().split('T')[0];
+  const pastMonthDate = new Date();
+  pastMonthDate.setDate(today.getDate() - 30);
+  const pastDateStr = pastMonthDate.toISOString().split('T')[0];
 
-    this.exchangeRateService
-      .getHistoricalData(this.baseCurrency, this.targetCurrency, startStr, endStr)
-      .subscribe((data) => {
-        this.historicalData = data;
-        this.renderChart();
-      });
-  }
+  this.exchangeRateService
+    .getHistoricalData(this.baseCurrency, this.targetCurrency, pastDateStr)
+    .subscribe((data) => {
+      this.historicalData = data;
+      this.renderChart();
+    });
+}
 
   renderChart(): void {
     const dates = this.historicalData.map((entry) => entry.date);
