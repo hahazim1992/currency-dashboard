@@ -35,10 +35,10 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     window.addEventListener('offline', () => this.handleNetworkChange());
 
     // Randomly trigger toggleOfflineMode
-    if (Math.random() < 0.5) {
-      console.log('Randomly triggering toggleOfflineMode.');
-      this.toggleOfflineMode();
-    }
+    // if (Math.random() < 0.5) {
+    //   console.log('Randomly triggering toggleOfflineMode.');
+    //   this.toggleOfflineMode();
+    // }
 
     this.loadData();
   }
@@ -64,7 +64,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     this.exchangeRates.filter = '';
   }
 
-  private loadData(): void {
+  loadData(): void {
     if (this.isOffline) {
       // Load cached data from localStorage
       const cachedData = localStorage.getItem('exchangeRates');
@@ -99,7 +99,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private handleNetworkChange(): void {
+  handleNetworkChange(): void {
     this.isOffline = !navigator.onLine;
     this.loadData();
   }
