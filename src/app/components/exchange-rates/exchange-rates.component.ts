@@ -93,6 +93,8 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
           return rate;
         });
         localStorage.setItem('exchangeRates', JSON.stringify(cachedRates));
+
+        console.log('LocalStorage Data:', localStorage.getItem('exchangeRates'));
       });
     }
   }

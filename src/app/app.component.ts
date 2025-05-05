@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'currency-dashboard';
+  isDarkMode = false;
+
+  constructor(private renderer: Renderer2) {}
+
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    const body = document.body;
+    if (this.isDarkMode) {
+      this.renderer.removeClass(body, 'light-theme');
+      this.renderer.addClass(body, 'dark-theme');
+    } else {
+      this.renderer.removeClass(body, 'dark-theme');
+      this.renderer.addClass(body, 'light-theme');
+    }
+  }
+
+  ngOnInit(): void {
+    this.renderer.addClass(document.body, 'light-theme');
+  }
 }
