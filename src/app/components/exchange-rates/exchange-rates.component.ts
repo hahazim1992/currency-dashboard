@@ -14,6 +14,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['number', 'currency', 'rate', 'baseCurrency'];
   exchangeRates = new MatTableDataSource<any>([]);
   filterForm!: FormGroup;
+  isOffline: boolean = !navigator.onLine;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -29,13 +30,17 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
       this.applyFilter(value);
     });
 
-    this.exchangeRateService.getExchangeRates().subscribe((data) => {
-      const rates = Object.entries(data.conversion_rates).map(([currency, value]) => ({
-        currency,
-        value: Number(value),
-      }));
-      this.exchangeRates.data = rates;
-    });
+    // check whether you are online or offline
+    window.addEventListener('online', () => this.handleNetworkChange());
+    window.addEventListener('offline', () => this.handleNetworkChange());
+
+    // Randomly trigger toggleOfflineMode
+    if (Math.random() < 0.5) {
+      console.log('Randomly triggering toggleOfflineMode.');
+      this.toggleOfflineMode();
+    }
+
+    this.loadData();
   }
 
   ngAfterViewInit(): void {
@@ -57,5 +62,64 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   resetFilter(): void {
     this.filterForm.reset();
     this.exchangeRates.filter = '';
+  }
+
+  private loadData(): void {
+    if (this.isOffline) {
+      // Load cached data from localStorage
+      const cachedData = localStorage.getItem('exchangeRates');
+      if (cachedData) {
+        this.exchangeRates.data = JSON.parse(cachedData);
+      } else {
+        console.warn('No cached data available.');
+      }
+    } else {
+      // Fetch live data and cache it
+      this.exchangeRateService.getExchangeRates().subscribe((data) => {
+        const rates = Object.entries(data.conversion_rates).map(([currency, value]) => ({
+          currency,
+          value: Number(value),
+        }));
+        this.exchangeRates.data = rates;
+
+        // modify cached data for simulation
+        const cachedRates = rates.map((rate) => {
+          if (rate.currency === 'USD') {
+            return { ...rate, value: 999 };
+          }
+          if (rate.currency === 'AED') {
+            return { ...rate, value: 888 };
+          }
+          return rate;
+        });
+        localStorage.setItem('exchangeRates', JSON.stringify(cachedRates));
+      });
+    }
+  }
+
+  private handleNetworkChange(): void {
+    this.isOffline = !navigator.onLine;
+    this.loadData();
+  }
+
+  toggleOfflineMode(): void {
+    this.isOffline = !this.isOffline;
+  
+    if (this.isOffline) {
+      console.warn('Simulating offline mode with a failed API call.');
+      // Call the dummy service to simulate a failed API call
+      this.exchangeRateService.getExchangeRatesDummy().subscribe(
+        () => {
+          console.log('This should not happen as the endpoint is fake.');
+        },
+        (error) => {
+          console.error('API call failed as expected in offline mode:', error);
+          this.loadData();
+        }
+      );
+    } else {
+      console.log('Switching to online mode. Fetching live data.');
+      this.loadData();
+    }
   }
 }

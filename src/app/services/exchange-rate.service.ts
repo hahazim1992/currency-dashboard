@@ -14,6 +14,10 @@ export class ExchangeRateService {
     return this.http.get(`${this.apiUrl}/exchange-rates`);
   }
 
+  getExchangeRatesDummy(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/exchange-Dummy-Dummy`);
+  }
+
   getHistoricalData(base: string, targets: string[], date: string): Observable<any> {
     const targetStr = targets.join(',');
     const url = `${this.apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`;

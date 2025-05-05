@@ -2,6 +2,16 @@
   <h2>Real-Time Exchange Rates</h2>
 
   <mat-card class="mat-elevation-z2">
+    <div class="offline-indicator" *ngIf="isOffline">
+      <p>You are offline. Displaying cached data.</p>
+    </div>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="button" (click)="toggleOfflineMode()">
+        {{ isOffline ? 'Switch to Online Mode' : 'Switch to Offline Mode' }}
+      </button>
+    </div>
+
     <form [formGroup]="filterForm">
       <div class="search-bar">
         <mat-form-field appearance="outline" class="full-width">
