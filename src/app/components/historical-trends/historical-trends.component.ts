@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 import { Chart, registerables } from 'chart.js';
+import { MatYearView } from '@angular/material/datepicker';
+import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
 
 Chart.register(...registerables);
 
@@ -11,7 +13,7 @@ Chart.register(...registerables);
 })
 export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   baseCurrency = 'USD';
-  targetCurrenciesStr = 'MYR,SGD,AUD';
+  targetCurrenciesStr = 'MYR,SGD';
   selectedDate!: string; // Use a date instead of interval
   chart: any;
 
@@ -91,4 +93,25 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   getRandomColor(): string {
     return `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
   }
+
+  // list of currencies in latest
+  totalHistoricalCurrencies = [
+    'USD', 'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
+    'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTN', 'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 
+    'CRC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'FOK', 'GBP', 
+    'GEL', 'GGP', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'IMP', 
+    'INR', 'IQD', 'IRR', 'ISK', 'JEP', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KID', 'KMF', 'KRW', 'KWD', 'KYD', 
+    'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRU', 'MUR', 
+    'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 
+    'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLE', 
+    'SLL', 'SOS', 'SRD', 'SSP', 'STN', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TVD', 'TWD', 
+    'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VES', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XCG', 'XDR', 'XOF', 'XPF', 'YER', 
+    'ZAR', 'ZMW', 'ZWL'
+  ];
+
+  workingHistoricalCurrencies = [
+    'ZAR', 'TRY', 'RON', 'PLN', 'PHP', 'KRW', 'ISK', 'INR', 'ILS', 'IDR', 
+    'HUF', 'HRK', 'HKD', 'GBP', 'EUR', 'DKK', 'CZK', 'CNY', 'CHF', 'CAD', 
+    'BRL', 'BGN', 'AUD', 'MYR', 'USD', 'AUD'
+  ];
 }
