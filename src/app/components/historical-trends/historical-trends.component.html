@@ -3,13 +3,11 @@
 
   <mat-card class="mat-elevation-z2">
     <div class="controls">
-      <!-- Base Currency Input -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Base Currency</mat-label>
         <input matInput type="text" [(ngModel)]="baseCurrency" placeholder="e.g., USD" />
       </mat-form-field>
 
-      <!-- Target Currencies Input -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Target Currencies (max 3)</mat-label>
         <mat-select [(ngModel)]="selectedCurrencies" multiple [disabled]="selectedCurrencies.length >= 3">
@@ -19,13 +17,11 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Reset and Select All Buttons -->
       <div class="reset-button-container">
         <!-- <button mat-raised-button color="accent" (click)="selectAllTargetCurrencies()">Select All</button> -->
         <button mat-raised-button color="warn" (click)="resetTargetCurrencies()">Reset Target Currencies</button>
       </div>
 
-      <!-- Date Picker -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Date</mat-label>
         <input
@@ -39,14 +35,12 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <!-- Load Button -->
       <div class="button-container">
         <button mat-raised-button color="primary" (click)="loadHistoricalData()">Load Chart</button>
       </div>
     </div>
   </mat-card>
 
-  <!-- Chart Canvas -->
   <div class="chart-container">
     <canvas id="historicalChart"></canvas>
   </div>

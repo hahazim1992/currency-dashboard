@@ -2,19 +2,27 @@
   <h2>Real-Time Exchange Rates</h2>
 
   <mat-card class="mat-elevation-z2">
-    <table mat-table [dataSource]="exchangeRates" class="mat-elevation-z8 full-width-table">
+    <table mat-table [dataSource]="exchangeRates" matSort class="mat-elevation-z8 full-width-table">
+      <!-- Currency Column -->
       <ng-container matColumnDef="currency">
-        <th mat-header-cell *matHeaderCellDef>Currency</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency</th>
         <td mat-cell *matCellDef="let rate">{{ rate.currency }}</td>
       </ng-container>
 
+      <!-- Rate Column -->
       <ng-container matColumnDef="rate">
-        <th mat-header-cell *matHeaderCellDef>Rate</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>
         <td mat-cell *matCellDef="let rate">{{ rate.value }}</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['currency', 'rate']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['currency', 'rate'];"></tr>
+      <!-- Base Currency Column -->
+      <ng-container matColumnDef="baseCurrency">
+        <th mat-header-cell *matHeaderCellDef>Base Currency</th>
+        <td mat-cell *matCellDef="let rate">USD</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </mat-card>
 </div>

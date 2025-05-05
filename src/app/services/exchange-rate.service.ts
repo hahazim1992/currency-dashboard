@@ -14,14 +14,6 @@ export class ExchangeRateService {
     return this.http.get(`${this.apiUrl}/exchange-rates`);
   }
 
-  // getHistoricalData(base: string, target: string[], date: string): Observable<any> {
-  //   console.log(`date`, date);
-  //   const apiKey = 'fca_live_uuG6lEeueWr1w0aaiNAMBsd7yQzaRQS3O9obN02L';
-  //   const currencies = target.join(',');
-  //   const url = `https://api.freecurrencyapi.com/v1/historical?apikey=${apiKey}&date=${2024-12-31}&base_currency=${base}&currencies=${currencies}`;
-  //   return this.http.get(url);
-  // }
-
   getHistoricalData(base: string, targets: string[], date: string): Observable<any> {
     const targetStr = targets.join(',');
     const url = `${this.apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`;

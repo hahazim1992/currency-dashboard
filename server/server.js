@@ -22,7 +22,6 @@ app.get('/exchange-rates', async (req, res) => {
 app.get('/historical-data', async (req, res) => {
   const { base, targets, date } = req.query;
 
-  // Log the received query parameters for debugging
   console.log('Received query params:', { base, targets, date });
 
   if (!base || !targets || !date) {
@@ -30,13 +29,12 @@ app.get('/historical-data', async (req, res) => {
   }
 
   try {
-    // Map 'targets' to 'currencies' for the external API
     const response = await axios.get('https://api.freecurrencyapi.com/v1/historical', {
       params: {
         apikey: API_KEY_2,
-        date, // Use the single date directly
+        date,
         base_currency: base,
-        currencies: targets, // Map 'targets' to 'currencies'
+        currencies: targets,
       },
     });
 
