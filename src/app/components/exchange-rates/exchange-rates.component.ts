@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 
@@ -15,6 +16,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   filterForm!: FormGroup;
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private exchangeRateService: ExchangeRateService, private fb: FormBuilder) {}
 
@@ -38,6 +40,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.exchangeRates.sort = this.sort;
+    this.exchangeRates.paginator = this.paginator;
 
     this.exchangeRates.sortingDataAccessor = (item, property) => {
       if (property === 'rate') {
