@@ -44,7 +44,9 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   };
 
   loadHistoricalData(): void {
-    const targets = this.selectedCurrencies.slice(0, 3);
+    // const targets = this.selectedCurrencies.slice(0, 3);
+
+    const targets = this.selectedCurrencies;
 
     if (!this.selectedDate) {
       alert('Please select a date.');
@@ -115,9 +117,23 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectAllTargetCurrencies(): void {
-    this.selectedCurrencies = [...this.workingHistoricalCurrencies];
-  }
+  // selectAllTargetCurrencies(): void {
+  //   this.selectedCurrencies = [...this.workingHistoricalCurrencies];
+  // }
+
+  // loadHistoricalData(): void {
+  //   const delay = 500; // 0.5 seconds delay
+  //   this.totalHistoricalCurrencies.forEach((target, index) => {
+  //     setTimeout(() => {
+  //       const targets = [target]; // Replace targets with a single element array
+  //       console.log(`Fetching data for target: ${target}`);
+  //       this.exchangeRateService.getHistoricalData(this.baseCurrency, targets, this.selectedDate).subscribe((data) => {
+  //         console.log(`Data for ${target}:`, data);
+  //         this.renderChart(data); // Optionally render the chart for each response
+  //       });
+  //     }, index * delay); // Delay each request by 0.5 seconds
+  //   });
+  // }
 
   // list of currencies in latest
   totalHistoricalCurrencies = [
