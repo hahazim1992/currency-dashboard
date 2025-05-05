@@ -9,7 +9,7 @@ import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
   styleUrls: ['./exchange-rates.component.scss'],
 })
 export class ExchangeRatesComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['currency', 'rate', 'baseCurrency'];
+  displayedColumns: string[] = ['number', 'currency', 'rate', 'baseCurrency'];
   exchangeRates = new MatTableDataSource<any>([]);
 
   @ViewChild(MatSort) sort!: MatSort;
