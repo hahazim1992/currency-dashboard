@@ -2,41 +2,44 @@
   <h2 class="title">Currency Converter</h2>
 
   <mat-card class="mat-elevation-z2">
-    <div class="converter-grid">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Amount</mat-label>
-        <input matInput [(ngModel)]="amount" id="amount" type="number" />
-      </mat-form-field>
+    <form [formGroup]="converterForm" (ngSubmit)="convert()">
+      <div class="converter-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Amount</mat-label>
+          <input matInput formControlName="amount" id="amount" type="number" />
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>From</mat-label>
-        <mat-select [(ngModel)]="fromCurrency" id="fromCurrency">
-          <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
-            {{ currency.key }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>From</mat-label>
+          <mat-select formControlName="fromCurrency" id="fromCurrency">
+            <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+              {{ currency.key }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <!-- Swap Button -->
-      <div class="swap-button-container">
-        <button mat-icon-button color="warn" (click)="swapCurrencies()">
-          <mat-icon>swap_horiz</mat-icon>
-        </button>
+        <!-- Swap Button -->
+        <div class="swap-button-container">
+          <button mat-icon-button color="warn" type="button" (click)="swapCurrencies()">
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>To</mat-label>
+          <mat-select formControlName="toCurrency" id="toCurrency">
+            <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+              {{ currency.key }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>To</mat-label>
-        <mat-select [(ngModel)]="toCurrency" id="toCurrency">
-          <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
-            {{ currency.key }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="button-container">
-      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
-    </div>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="converterForm.invalid">Convert</button>
+        <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+      </div>
+    </form>
 
     <div *ngIf="convertedAmount !== null" class="result">
       <h3>Converted Amount: {{ convertedAmount }}</h3>
