@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 
 @Component({
@@ -11,12 +12,21 @@ import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['number', 'currency', 'rate', 'baseCurrency'];
   exchangeRates = new MatTableDataSource<any>([]);
+  filterForm!: FormGroup;
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private exchangeRateService: ExchangeRateService) {}
+  constructor(private exchangeRateService: ExchangeRateService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.filterForm = this.fb.group({
+      search: [''],
+    });
+
+    this.filterForm.get('search')?.valueChanges.subscribe((value) => {
+      this.applyFilter(value);
+    });
+
     this.exchangeRateService.getExchangeRates().subscribe((data) => {
       const rates = Object.entries(data.conversion_rates).map(([currency, value]) => ({
         currency,
@@ -37,8 +47,12 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     };
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.exchangeRates.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string): void {
+    this.exchangeRates.filter = filterValue?.trim().toLowerCase();
+  }
+
+  resetFilter(): void {
+    this.filterForm.reset();
+    this.exchangeRates.filter = '';
   }
 }

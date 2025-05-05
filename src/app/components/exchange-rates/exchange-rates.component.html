@@ -2,12 +2,18 @@
   <h2>Real-Time Exchange Rates</h2>
 
   <mat-card class="mat-elevation-z2">
-    <div class="search-bar">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Search Currency</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Enter currency code" />
-      </mat-form-field>
-    </div>
+    <form [formGroup]="filterForm">
+      <div class="search-bar">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Search Currency</mat-label>
+          <input matInput formControlName="search" placeholder="Enter currency code" />
+        </mat-form-field>
+      </div>
+
+      <div class="button-container">
+        <button mat-raised-button color="warn" type="button" (click)="resetFilter()">Reset</button>
+      </div>
+    </form>
 
     <table mat-table [dataSource]="exchangeRates" matSort class="mat-elevation-z8 full-width-table">
       <ng-container matColumnDef="number">
