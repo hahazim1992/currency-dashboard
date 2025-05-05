@@ -55,6 +55,7 @@ app.get('/historical-data', async (req, res) => {
   }
 });
 
+/* istanbul ignore next */
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

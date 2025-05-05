@@ -1,6 +1,6 @@
 const request = require('supertest');
-const express = require('express');
-const app = require('./server'); // Import your server
+const app = require('./server');
+const axios = require('axios');
 
 describe('Server API Endpoints', () => {
   it('should fetch exchange rates', async () => {
@@ -33,5 +33,46 @@ describe('Server API Endpoints', () => {
 
     expect(response.status).toBe(500);
     expect(response.body).toHaveProperty('error', 'Error fetching historical data');
+  });
+
+  it('should handle errors when fetching exchange rates', async () => {
+    jest.spyOn(axios, 'get').mockRejectedValueOnce(new Error('API error'));
+
+    const response = await request(app).get('/exchange-rates');
+
+    expect(response.status).toBe(500);
+    expect(response.body).toHaveProperty('error', 'Error fetching exchange rates');
+
+    axios.get.mockRestore();
+  });
+
+  it('should return 404 if no data is found for the specified date', async () => {
+    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+      data: {
+        data: {},
+      },
+    });
+  
+    const response = await request(app)
+      .get('/historical-data')
+      .query({ base: 'USD', targets: 'EUR,GBP', date: '1900-01-01' });
+  
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error', 'No data found for the specified date');
+  
+    axios.get.mockRestore();
+  });
+
+  it('should return 500 if an error occurs while fetching historical data', async () => {
+    jest.spyOn(axios, 'get').mockRejectedValueOnce(new Error('API error'));
+  
+    const response = await request(app)
+      .get('/historical-data')
+      .query({ base: 'USD', targets: 'EUR,GBP', date: '2025-05-01' });
+  
+    expect(response.status).toBe(500);
+    expect(response.body).toHaveProperty('error', 'Error fetching historical data');
+  
+    axios.get.mockRestore();
   });
 });
