@@ -30,12 +30,15 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     this.exchangeRates.sort = this.sort;
 
     this.exchangeRates.sortingDataAccessor = (item, property) => {
-      console.log(`item`, item);
-      console.log(`property`, property);
       if (property === 'rate') {
         return item.value;
       }
       return item[property];
     };
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.exchangeRates.filter = filterValue.trim().toLowerCase();
   }
 }
