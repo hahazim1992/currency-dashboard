@@ -19,6 +19,11 @@
   width: 100%;
 }
 
+.reset-button-container {
+  text-align: center;
+  margin-bottom: 16px; /* Add spacing below the reset button */
+}
+
 .button-container {
   text-align: center;
   margin-bottom: 1rem;
@@ -26,4 +31,16 @@
 
 .chart-container {
   margin-top: 30px;
+}
+
+.mat-form-field {
+  margin-bottom: 16px;
+}
+
+.reset-button-container {
+  text-align: center;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 import { Chart, registerables } from 'chart.js';
-import { MatYearView } from '@angular/material/datepicker';
-import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
+import { DatePipe } from '@angular/common';
 
 Chart.register(...registerables);
 
@@ -10,22 +9,26 @@ Chart.register(...registerables);
   selector: 'app-historical-trends',
   templateUrl: './historical-trends.component.html',
   styleUrls: ['./historical-trends.component.scss'],
+  providers: [DatePipe], // Add DatePipe as a provider
 })
 export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   baseCurrency = 'USD';
-  targetCurrenciesStr = 'MYR,SGD';
-  selectedDate!: string; // Use a date instead of interval
+  selectedCurrencies: string[] = ['MYR', 'USD', 'AUD'];
+  selectedDate!: string;
   chart: any;
 
-  constructor(private exchangeRateService: ExchangeRateService) {}
+  workingHistoricalCurrencies = [
+    'ZAR', 'TRY', 'RON', 'PLN', 'PHP', 'KRW', 'ISK', 'INR', 'ILS', 'IDR', 'HUF', 'HRK', 'HKD', 'GBP', 'EUR', 'DKK', 'CZK', 'CNY', 'CHF', 'CAD', 'BRL', 'BGN', 'AUD', 'MYR', 'USD'
+  ];
+
+  constructor(private exchangeRateService: ExchangeRateService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     // Set default to yesterday's date
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    // Format: YYYY-MM-DD
-    this.selectedDate = yesterday.toISOString().split('T')[0]; 
-    this.loadHistoricalData()
+    this.selectedDate = this.datePipe.transform(yesterday, 'yyyy-MM-dd')!; // Format: YYYY-MM-DD
+    this.loadHistoricalData();
   }
 
   ngOnDestroy(): void {
@@ -41,16 +44,26 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   };
 
   loadHistoricalData(): void {
-    const targets = this.targetCurrenciesStr.split(',').map((c) => c.trim()).slice(0, 3);
-  
+    const targets = this.selectedCurrencies.slice(0, 3);
+
     if (!this.selectedDate) {
       alert('Please select a date.');
       return;
     }
-  
+
+    if (targets.length === 0) {
+      alert('Please select at least one target currency.');
+      return;
+    }
+
     this.exchangeRateService.getHistoricalData(this.baseCurrency, targets, this.selectedDate).subscribe((data) => {
       this.renderChart(data);
     });
+  }
+
+  onDateChange(event: any): void {
+    // Format the selected date as YYYY-MM-DD
+    this.selectedDate = this.datePipe.transform(event.value, 'yyyy-MM-dd')!;
   }
 
   renderChart(data: any): void {
@@ -94,6 +107,18 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
     return `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
   }
 
+  resetTargetCurrencies(): void {
+    this.selectedCurrencies = [];
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+  }
+
+  selectAllTargetCurrencies(): void {
+    this.selectedCurrencies = [...this.workingHistoricalCurrencies];
+  }
+
   // list of currencies in latest
   totalHistoricalCurrencies = [
     'USD', 'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
@@ -107,11 +132,5 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
     'SLL', 'SOS', 'SRD', 'SSP', 'STN', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TVD', 'TWD', 
     'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VES', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XCG', 'XDR', 'XOF', 'XPF', 'YER', 
     'ZAR', 'ZMW', 'ZWL'
-  ];
-
-  workingHistoricalCurrencies = [
-    'ZAR', 'TRY', 'RON', 'PLN', 'PHP', 'KRW', 'ISK', 'INR', 'ILS', 'IDR', 
-    'HUF', 'HRK', 'HKD', 'GBP', 'EUR', 'DKK', 'CZK', 'CNY', 'CHF', 'CAD', 
-    'BRL', 'BGN', 'AUD', 'MYR', 'USD', 'AUD'
   ];
 }

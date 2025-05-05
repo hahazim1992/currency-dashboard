@@ -11,14 +11,30 @@
 
       <!-- Target Currencies Input -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Target Currencies (comma-separated, max 3)</mat-label>
-        <input matInput type="text" [(ngModel)]="targetCurrenciesStr" placeholder="e.g., MYR,SGD" />
+        <mat-label>Target Currencies (max 3)</mat-label>
+        <mat-select [(ngModel)]="selectedCurrencies" multiple>
+          <mat-option *ngFor="let currency of workingHistoricalCurrencies" [value]="currency">
+            {{ currency }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+
+      <!-- Reset and Select All Buttons -->
+      <div class="reset-button-container">
+        <button mat-raised-button color="accent" (click)="selectAllTargetCurrencies()">Select All</button>
+        <button mat-raised-button color="warn" (click)="resetTargetCurrencies()">Reset Target Currencies</button>
+      </div>
 
       <!-- Date Picker -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [matDatepickerFilter]="disableFutureDates" />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          [matDatepickerFilter]="disableFutureDates"
+          (dateChange)="onDateChange($event)"
+        />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
