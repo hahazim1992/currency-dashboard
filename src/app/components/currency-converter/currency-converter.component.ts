@@ -27,4 +27,10 @@ export class CurrencyConverterComponent {
       this.convertedAmount = this.amount * rate;
     }
   }
+
+  swapCurrencies(): void {
+    const temp = this.fromCurrency;
+    this.fromCurrency = this.toCurrency;
+    this.toCurrency = temp;
+  }
 }

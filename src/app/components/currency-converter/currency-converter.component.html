@@ -17,6 +17,13 @@
         </mat-select>
       </mat-form-field>
 
+      <!-- Swap Button -->
+      <div class="swap-button-container">
+        <button mat-icon-button color="warn" (click)="swapCurrencies()">
+          <mat-icon>swap_horiz</mat-icon>
+        </button>
+      </div>
+
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>To</mat-label>
         <mat-select [(ngModel)]="toCurrency" id="toCurrency">
