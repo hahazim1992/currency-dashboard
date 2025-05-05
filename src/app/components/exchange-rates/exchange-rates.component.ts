@@ -70,8 +70,6 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
       const cachedData = localStorage.getItem('exchangeRates');
       if (cachedData) {
         this.exchangeRates.data = JSON.parse(cachedData);
-      } else {
-        console.warn('No cached data available.');
       }
     } else {
       // Fetch live data and cache it
@@ -108,12 +106,9 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     this.isOffline = !this.isOffline;
   
     if (this.isOffline) {
-      console.warn('Simulating offline mode with a failed API call.');
       // Call the dummy service to simulate a failed API call
       this.exchangeRateService.getExchangeRatesDummy().subscribe(
-        () => {
-          console.log('This should not happen as the endpoint is fake.');
-        },
+        () => {},
         (error) => {
           console.error('API call failed as expected in offline mode:', error);
           this.loadData();

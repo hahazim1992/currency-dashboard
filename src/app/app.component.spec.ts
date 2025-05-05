@@ -32,11 +32,11 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should initialize with light theme', () => {
-  //   const body = document.body;
-  //   expect(body.classList.contains('light-theme')).toBeTrue();
-  //   expect(body.classList.contains('dark-theme')).toBeFalse();
-  // });
+  it('should initialize with light theme', () => {
+    const body = document.body;
+    expect(body.classList.contains('light-theme')).toBeTrue();
+    // expect(body.classList.contains('dark-theme')).toBeFalse();
+  });
 
   it('should toggle to dark theme when toggleTheme is called', () => {
     const body = document.body;

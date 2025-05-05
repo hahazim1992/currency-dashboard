@@ -64,14 +64,14 @@ describe('ExchangeRatesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should initialize with online status and fetch exchange rates', () => {
-  //   expect(component.isOffline).toBeTrue();
-  //   expect(component.exchangeRates.data).toEqual([
-  //     { currency: 'USD', value: 999 },
-  //     { currency: 'EUR', value: 0.85 },
-  //     { currency: 'AED', value: 888 },
-  //   ]);
-  // });
+  it('should initialize with online status and fetch exchange rates', () => {
+    expect(component.isOffline).toBeFalse();
+    expect(component.exchangeRates.data).toEqual([
+      { currency: 'USD', value: 1 },
+      { currency: 'EUR', value: 0.85 },
+      { currency: 'AED', value: 3.67 },
+    ]);
+  });
 
   it('should filter the exchange rates based on search input', () => {
     component.exchangeRates.data = [
@@ -141,5 +141,36 @@ describe('ExchangeRatesComponent', () => {
     window.dispatchEvent(new Event('online'));
     expect(component.isOffline).toBeFalse();
     expect(component.loadData).toHaveBeenCalledTimes(2);
+  });
+
+  it('should set up sortingDataAccessor for exchangeRates in ngAfterViewInit', () => {
+    const mockData = [
+      { currency: 'USD', value: 1 },
+      { currency: 'EUR', value: 0.85 },
+      { currency: 'AED', value: 3.67 },
+    ];
+    component.exchangeRates.data = mockData;
+  
+    component.ngAfterViewInit();
+  
+    const sortedByRate = mockData.sort((a, b) =>
+      Number(component.exchangeRates.sortingDataAccessor(a, 'rate')) - Number(component.exchangeRates.sortingDataAccessor(b, 'rate'))
+    );
+    expect(sortedByRate).toEqual([
+      { currency: 'EUR', value: 0.85 },
+      { currency: 'USD', value: 1 },
+      { currency: 'AED', value: 3.67 },
+    ]);
+  
+    const sortedByCurrency = mockData.sort((a, b) =>
+      String(component.exchangeRates.sortingDataAccessor(a, 'currency')).localeCompare(
+        String(component.exchangeRates.sortingDataAccessor(b, 'currency'))
+      )
+    );
+    expect(sortedByCurrency).toEqual([
+      { currency: 'AED', value: 3.67 },
+      { currency: 'EUR', value: 0.85 },
+      { currency: 'USD', value: 1 },
+    ]);
   });
 });
