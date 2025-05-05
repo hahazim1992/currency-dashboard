@@ -1,6 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
-import { Chart } from 'chart.js';
+import {
+  Chart,
+  registerables
+} from 'chart.js';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-historical-trends',
@@ -9,7 +14,7 @@ import { Chart } from 'chart.js';
 })
 export class HistoricalTrendsComponent implements OnDestroy {
   baseCurrency = 'USD';
-  targetCurrenciesStr = 'MYR,SGD';
+  targetCurrenciesStr = 'MYR,SGD,AUD';
   selectedDate: string; // Use a date instead of interval
   chart: any;
 
@@ -39,29 +44,37 @@ export class HistoricalTrendsComponent implements OnDestroy {
   }
 
   renderChart(data: any): void {
-    const labels = data.map((d: any) => d.date);
+    const labels = data.map((d: any) => d.currency);
     const datasets = [
       {
-        label: `${this.baseCurrency} → ${this.targetCurrenciesStr}`,
-        data: data.map((entry: any) => entry.rate),
-        borderColor: this.getRandomColor(),
-        fill: false,
-        tension: 0.3,
+      label: `Exchange Rate of ${this.baseCurrency} on ${this.selectedDate}`,
+      data: data.map((entry: any) => entry.rate),
+      borderColor: this.getRandomColor(),
+      backgroundColor: this.getRandomColor(),
+      fill: false,
+      tension: 0.3,
       },
     ];
-
+  
     if (this.chart) {
       this.chart.destroy();
     }
 
-    this.chart = new Chart('historicalChart', {
+    const canvas = document.getElementById('historicalChart') as HTMLCanvasElement;
+    this.chart = new Chart(canvas, {
       type: 'line',
       data: { labels, datasets },
       options: {
         responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+        },
         scales: {
-          x: { title: { display: true, text: 'Date' } },
-          y: { title: { display: true, text: 'Rate' } },
+          x: { title: { display: true, text: 'Currency' } },
+          y: { title: { display: true, text: 'Exchange Rate' } },
         },
       },
     });
