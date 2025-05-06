@@ -32,7 +32,7 @@ at the root of the project
 # run unit test FE Jasmine Karma
 
 at the root of the project
-- npm run start
+- npm run test
 - at folder explorer, goto root > coverage > currency-dashboard > right click (index.html) > copy path > pate in google chrome > inspect unit test coverage
 
 ## run unit test BE Jest Babel
@@ -47,14 +47,17 @@ at the root of the project
 at the root of the project
 - npm run format
 
+## run esLint
+
+at the root of the project
+- npm run lint
+
 ## assessment checklist + developer comments
 
 - ✅ - DONE
 - ❌ - NOT DONE / CAN'T BE DONE
 - 🗯️ - DEVELOPER NOTES
-
 #
-
 - ✅ Fetch real-time exchange rates from a public API (e.g., ExchangeRate-API)
 - ✅ Display rates in a sortable table with columns for currency code, exchange rate, and base currency.
 #
@@ -70,9 +73,9 @@ at the root of the project
 - ✅ Include a section where users can input an amount and two currencies to calculate the equivalent value based on the latest exchange rates.
 - ✅ Implement filtering by currency and a search bar to quickly find specific currencies.
 #
-- ❌ Use WebSockets or a polling mechanism to refresh exchange rates in real time.
-- ❌ Optimize polling intervals to reduce API calls without compromising user experience.
-- 🗯️: currently not using any DB, havent check the feasibility
+- ✅ | ❌ (partially) Use WebSockets or a polling mechanism to refresh exchange rates in real time.
+- ✅ | ❌ (partially) Optimize polling intervals to reduce API calls without compromising user experience.
+- 🗯️: currently not using websocket or polling, achieved this by using take and interval method from rxjs
 #
 - ✅ Cache the last fetched exchange rates and historical data in IndexedDB or localStorage.
 - 🗯️: this is available ONLY in exchange rates page (landing page). We are using localStorage. you may use offline mode button i provoided, OR, go to historical page > disconnect your internet > navigate back to exchange rates > observe it detects as you dont have connectivity and will fetch from localStorage earlier when you had internet
