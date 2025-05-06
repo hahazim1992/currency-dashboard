@@ -14,7 +14,6 @@ import { HistoricalTrendsComponent } from './historical-trends.component';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 import { DatePipe } from '@angular/common';
 import { of } from 'rxjs';
-import { Chart } from 'chart.js';
 
 describe('HistoricalTrendsComponent', () => {
   let component: HistoricalTrendsComponent;

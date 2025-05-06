@@ -1,4 +1,3 @@
-import { MatSortModule } from '@angular/material/sort';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 import { Chart, registerables } from 'chart.js';
