@@ -9,7 +9,7 @@ import { HistoricalTrendsComponent } from './components/historical-trends/histor
 import { CurrencyConverterComponent } from './components/currency-converter/currency-converter.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ExchangeRatesComponent,
     HistoricalTrendsComponent,
     CurrencyConverterComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,8 +54,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     MatSortModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,6 +5,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LoaderComponent } from './components/loader/loader.component';
+import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -13,12 +18,22 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [AppComponent, LoaderComponent],
       imports: [
+        BrowserModule,
+        HttpClientModule,
         MatToolbarModule,
         MatButtonModule,
         MatIconModule,
+        RouterModule,
         RouterTestingModule,
+      ],
+      providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: LoaderInterceptor,
+          multi: true,
+        },
       ],
     }).compileComponents();
 
@@ -35,7 +50,6 @@ describe('AppComponent', () => {
   it('should initialize with light theme', () => {
     const body = document.body;
     expect(body.classList.contains('light-theme')).toBeTrue();
-    // expect(body.classList.contains('dark-theme')).toBeFalse();
   });
 
   it('should toggle to dark theme when toggleTheme is called', () => {

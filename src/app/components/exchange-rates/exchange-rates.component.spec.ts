@@ -190,7 +190,7 @@ describe('ExchangeRatesComponent', () => {
       { currency: 'USD', value: 1 },
     ]);
   });
-  
+
   it('should set up interval to fetch exchange rates and cache them', (done) => {
     const mockRates = {
       conversion_rates: {
@@ -199,12 +199,12 @@ describe('ExchangeRatesComponent', () => {
         AED: 3.67,
       },
     };
-  
+
     mockExchangeRateService.getExchangeRates.and.returnValue(of(mockRates));
     spyOn(localStorage, 'setItem');
-  
+
     component.ngOnInit();
-  
+
     setTimeout(() => {
       expect(mockExchangeRateService.getExchangeRates).toHaveBeenCalledTimes(4);
       expect(component.exchangeRates.data).toEqual([

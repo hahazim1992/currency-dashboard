@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,7 +18,9 @@ import { takeUntil, switchMap, take } from 'rxjs/operators';
   templateUrl: './exchange-rates.component.html',
   styleUrls: ['./exchange-rates.component.scss'],
 })
-export class ExchangeRatesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExchangeRatesComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   displayedColumns: string[] = ['number', 'currency', 'rate', 'baseCurrency'];
   exchangeRates = new MatTableDataSource<any>([]);
   filterForm!: FormGroup;
@@ -52,31 +60,31 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit, OnDestroy 
     // Trigger API call every 10 seconds, up to a maximum of 5 times
     interval(3000)
       .pipe(
-      takeUntil(this.destroy$),
-      take(5),
-      switchMap(() => this.exchangeRateService.getExchangeRates())
+        takeUntil(this.destroy$),
+        take(5),
+        switchMap(() => this.exchangeRateService.getExchangeRates())
       )
       .subscribe((data) => {
-      const rates = Object.entries(data.conversion_rates).map(
-        ([currency, value]) => ({
-        currency,
-        value: Number(value),
-        })
-      );
-      this.exchangeRates.data = rates;
+        const rates = Object.entries(data.conversion_rates).map(
+          ([currency, value]) => ({
+            currency,
+            value: Number(value),
+          })
+        );
+        this.exchangeRates.data = rates;
 
-      // modify cached data for simulation
-      const cachedRates = rates.map((rate) => {
-        if (rate.currency === 'USD') {
-        return { ...rate, value: 999 };
-        }
-        if (rate.currency === 'AED') {
-        return { ...rate, value: 888 };
-        }
-        return rate;
+        // modify cached data for simulation
+        const cachedRates = rates.map((rate) => {
+          if (rate.currency === 'USD') {
+            return { ...rate, value: 999 };
+          }
+          if (rate.currency === 'AED') {
+            return { ...rate, value: 888 };
+          }
+          return rate;
+        });
+        localStorage.setItem('exchangeRates', JSON.stringify(cachedRates));
       });
-      localStorage.setItem('exchangeRates', JSON.stringify(cachedRates));
-    });
   }
 
   ngAfterViewInit(): void {
