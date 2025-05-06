@@ -95,8 +95,6 @@ at the root of the project
 #
 - ✅ | ❌ (partially) Include a basic CI/CD pipeline script to lint, test, build, and deploy the application to a staging environment.
 - 🗯️: implement CI job for lint and unit test. everytime PR/MR, merged, or push directly to main will trigger the pipeline/action
-
-- ![alt text](image.png)
 #
 - ✅ Provide a README.md file with setup instructions, architecture decisions, and usage details.
 
