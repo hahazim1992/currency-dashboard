@@ -14,7 +14,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['number', 'currency', 'rate', 'baseCurrency'];
   exchangeRates = new MatTableDataSource<any>([]);
   filterForm!: FormGroup;
-  isOffline: boolean = !navigator.onLine;
+  isOffline = !navigator.onLine;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
