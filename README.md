@@ -1,4 +1,9 @@
-# CurrencyDashboard
+# CurrencyDashboard - Get Started
+
+- git clone https://github.com/hahazim1992/currency-dashboard.git
+- checkout main
+
+## install FE packages
 
 - install angular v16.2.16.
 - install node v18.20.4
