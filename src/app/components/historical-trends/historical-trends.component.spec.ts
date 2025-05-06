@@ -70,8 +70,8 @@ describe('HistoricalTrendsComponent', () => {
     component.loadHistoricalData();
 
     expect(mockExchangeRateService.getHistoricalData).toHaveBeenCalledWith(
-      component.baseCurrency,
-      component.selectedCurrencies,
+      component.selectedBaseCurrencies,
+      component.selectedTargetCurrencies,
       component.selectedDate
     );
     expect(component.renderChart).toHaveBeenCalledWith([
@@ -89,17 +89,17 @@ describe('HistoricalTrendsComponent', () => {
   it('should reset target currencies and destroy the chart', () => {
     spyOn(component.chart, 'destroy').and.callThrough(); // Spy on chart.destroy
 
-    component.selectedCurrencies = ['USD', 'EUR', 'GBP'];
+    component.selectedTargetCurrencies = ['USD', 'EUR', 'GBP'];
     component.resetTargetCurrencies();
 
-    expect(component.selectedCurrencies).toEqual([]);
+    expect(component.selectedTargetCurrencies).toEqual([]);
     expect(component.chart).toBeNull();
   });
 
   it('should alert if no date is selected', () => {
     spyOn(window, 'alert');
     component.selectedDate = '';
-    component.selectedCurrencies = ['EUR', 'GBP'];
+    component.selectedTargetCurrencies = ['EUR', 'GBP'];
   
     component.loadHistoricalData();
   
@@ -109,7 +109,7 @@ describe('HistoricalTrendsComponent', () => {
   it('should alert if no target currencies are selected', () => {
     spyOn(window, 'alert');
     component.selectedDate = '2025-05-05';
-    component.selectedCurrencies = [];
+    component.selectedTargetCurrencies = [];
   
     component.loadHistoricalData();
   
@@ -119,13 +119,13 @@ describe('HistoricalTrendsComponent', () => {
   it('should call getHistoricalData with correct parameters and renderChart', () => {
     spyOn(component, 'renderChart');
     component.selectedDate = '2025-05-05';
-    component.selectedCurrencies = ['EUR', 'GBP'];
+    component.selectedTargetCurrencies = ['EUR', 'GBP'];
   
     component.loadHistoricalData();
   
     expect(mockExchangeRateService.getHistoricalData).toHaveBeenCalledWith(
-      component.baseCurrency,
-      component.selectedCurrencies,
+      component.selectedBaseCurrencies,
+      component.selectedTargetCurrencies,
       component.selectedDate
     );
     expect(component.renderChart).toHaveBeenCalledWith([
@@ -150,7 +150,7 @@ describe('HistoricalTrendsComponent', () => {
     expect(component.chart.data.labels).toEqual(['EUR', 'GBP']);
     expect(component.chart.data.datasets[0].data).toEqual([0.85, 0.75]);
     expect(component.chart.data.datasets[0].label).toBe(
-      `Exchange Rate of ${component.baseCurrency} on ${component.selectedDate}`
+      `Exchange Rate of ${component.selectedBaseCurrencies} on ${component.selectedDate}`
     );
   
     document.body.removeChild(canvas);
