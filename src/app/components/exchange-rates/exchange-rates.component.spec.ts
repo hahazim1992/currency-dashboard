@@ -190,4 +190,37 @@ describe('ExchangeRatesComponent', () => {
       { currency: 'USD', value: 1 },
     ]);
   });
+  
+  it('should set up interval to fetch exchange rates and cache them', (done) => {
+    const mockRates = {
+      conversion_rates: {
+        USD: 1,
+        EUR: 0.85,
+        AED: 3.67,
+      },
+    };
+  
+    mockExchangeRateService.getExchangeRates.and.returnValue(of(mockRates));
+    spyOn(localStorage, 'setItem');
+  
+    component.ngOnInit();
+  
+    setTimeout(() => {
+      expect(mockExchangeRateService.getExchangeRates).toHaveBeenCalledTimes(4);
+      expect(component.exchangeRates.data).toEqual([
+        { currency: 'USD', value: 1 },
+        { currency: 'EUR', value: 0.85 },
+        { currency: 'AED', value: 3.67 },
+      ]);
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        'exchangeRates',
+        JSON.stringify([
+          { currency: 'USD', value: 999 },
+          { currency: 'EUR', value: 0.85 },
+          { currency: 'AED', value: 888 },
+        ])
+      );
+      done();
+    }, 3500);
+  });
 });
