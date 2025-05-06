@@ -19,7 +19,10 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private exchangeRateService: ExchangeRateService, private fb: FormBuilder) {}
+  constructor(
+    private exchangeRateService: ExchangeRateService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({
@@ -74,10 +77,12 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
     } else {
       // Fetch live data and cache it
       this.exchangeRateService.getExchangeRates().subscribe((data) => {
-        const rates = Object.entries(data.conversion_rates).map(([currency, value]) => ({
-          currency,
-          value: Number(value),
-        }));
+        const rates = Object.entries(data.conversion_rates).map(
+          ([currency, value]) => ({
+            currency,
+            value: Number(value),
+          })
+        );
         this.exchangeRates.data = rates;
 
         // modify cached data for simulation
@@ -92,7 +97,10 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
         });
         localStorage.setItem('exchangeRates', JSON.stringify(cachedRates));
 
-        console.log('LocalStorage Data:', localStorage.getItem('exchangeRates'));
+        console.log(
+          'LocalStorage Data:',
+          localStorage.getItem('exchangeRates')
+        );
       });
     }
   }
@@ -104,7 +112,7 @@ export class ExchangeRatesComponent implements OnInit, AfterViewInit {
 
   toggleOfflineMode(): void {
     this.isOffline = !this.isOffline;
-  
+
     if (this.isOffline) {
       // Call the dummy service to simulate a failed API call
       this.exchangeRateService.getExchangeRatesDummy().subscribe(

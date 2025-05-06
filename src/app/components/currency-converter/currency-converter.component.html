@@ -12,14 +12,22 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>From</mat-label>
           <mat-select formControlName="fromCurrency" id="fromCurrency">
-            <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+            <mat-option
+              *ngFor="let currency of exchangeRates | keyvalue"
+              [value]="currency.key"
+            >
               {{ currency.key }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <div class="swap-button-container">
-          <button mat-icon-button color="warn" type="button" (click)="swapCurrencies()">
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="swapCurrencies()"
+          >
             <mat-icon>swap_horiz</mat-icon>
           </button>
         </div>
@@ -27,7 +35,10 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>To</mat-label>
           <mat-select formControlName="toCurrency" id="toCurrency">
-            <mat-option *ngFor="let currency of exchangeRates | keyvalue" [value]="currency.key">
+            <mat-option
+              *ngFor="let currency of exchangeRates | keyvalue"
+              [value]="currency.key"
+            >
               {{ currency.key }}
             </mat-option>
           </mat-select>
@@ -35,8 +46,22 @@
       </div>
 
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="converterForm.invalid">Convert</button>
-        <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="converterForm.invalid"
+        >
+          Convert
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="resetForm()"
+        >
+          Reset
+        </button>
       </div>
     </form>
 

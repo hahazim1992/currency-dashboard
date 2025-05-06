@@ -33,7 +33,8 @@ export class CurrencyConverterComponent implements OnInit {
     const { amount, fromCurrency, toCurrency } = this.converterForm.value;
 
     if (this.exchangeRates[fromCurrency] && this.exchangeRates[toCurrency]) {
-      const rate = this.exchangeRates[toCurrency] / this.exchangeRates[fromCurrency];
+      const rate =
+        this.exchangeRates[toCurrency] / this.exchangeRates[fromCurrency];
       this.convertedAmount = amount * rate;
     }
   }

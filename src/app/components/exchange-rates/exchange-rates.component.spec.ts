@@ -19,7 +19,10 @@ describe('ExchangeRatesComponent', () => {
   let mockExchangeRateService: jasmine.SpyObj<ExchangeRateService>;
 
   beforeEach(async () => {
-    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', ['getExchangeRates', 'getExchangeRatesDummy']);
+    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', [
+      'getExchangeRates',
+      'getExchangeRatesDummy',
+    ]);
 
     await TestBed.configureTestingModule({
       declarations: [ExchangeRatesComponent],
@@ -55,7 +58,9 @@ describe('ExchangeRatesComponent', () => {
       })
     );
 
-    mockExchangeRateService.getExchangeRatesDummy.and.returnValue(throwError(() => new Error('Simulated API failure')));
+    mockExchangeRateService.getExchangeRatesDummy.and.returnValue(
+      throwError(() => new Error('Simulated API failure'))
+    );
 
     fixture.detectChanges(); // Trigger ngOnInit
   });
@@ -81,10 +86,14 @@ describe('ExchangeRatesComponent', () => {
     ];
 
     component.applyFilter('usd');
-    expect(component.exchangeRates.filteredData).toEqual([{ currency: 'USD', value: 1 }]);
+    expect(component.exchangeRates.filteredData).toEqual([
+      { currency: 'USD', value: 1 },
+    ]);
 
     component.applyFilter('eur');
-    expect(component.exchangeRates.filteredData).toEqual([{ currency: 'EUR', value: 0.85 }]);
+    expect(component.exchangeRates.filteredData).toEqual([
+      { currency: 'EUR', value: 0.85 },
+    ]);
   });
 
   it('should reset the filter', () => {
@@ -95,10 +104,14 @@ describe('ExchangeRatesComponent', () => {
     ];
 
     component.applyFilter('usd');
-    expect(component.exchangeRates.filteredData).toEqual([{ currency: 'USD', value: 1 }]);
+    expect(component.exchangeRates.filteredData).toEqual([
+      { currency: 'USD', value: 1 },
+    ]);
 
     component.resetFilter();
-    expect(component.exchangeRates.filteredData).toEqual(component.exchangeRates.data);
+    expect(component.exchangeRates.filteredData).toEqual(
+      component.exchangeRates.data
+    );
   });
 
   it('should toggle offline mode and load cached data', () => {
@@ -150,20 +163,24 @@ describe('ExchangeRatesComponent', () => {
       { currency: 'AED', value: 3.67 },
     ];
     component.exchangeRates.data = mockData;
-  
+
     component.ngAfterViewInit();
-  
-    const sortedByRate = mockData.sort((a, b) =>
-      Number(component.exchangeRates.sortingDataAccessor(a, 'rate')) - Number(component.exchangeRates.sortingDataAccessor(b, 'rate'))
+
+    const sortedByRate = mockData.sort(
+      (a, b) =>
+        Number(component.exchangeRates.sortingDataAccessor(a, 'rate')) -
+        Number(component.exchangeRates.sortingDataAccessor(b, 'rate'))
     );
     expect(sortedByRate).toEqual([
       { currency: 'EUR', value: 0.85 },
       { currency: 'USD', value: 1 },
       { currency: 'AED', value: 3.67 },
     ]);
-  
+
     const sortedByCurrency = mockData.sort((a, b) =>
-      String(component.exchangeRates.sortingDataAccessor(a, 'currency')).localeCompare(
+      String(
+        component.exchangeRates.sortingDataAccessor(a, 'currency')
+      ).localeCompare(
         String(component.exchangeRates.sortingDataAccessor(b, 'currency'))
       )
     );

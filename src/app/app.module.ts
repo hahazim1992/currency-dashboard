@@ -29,7 +29,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AppComponent,
     ExchangeRatesComponent,
     HistoricalTrendsComponent,
-    CurrencyConverterComponent
+    CurrencyConverterComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +49,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     ReactiveFormsModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -15,7 +15,11 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Target Currencies (max 3)</mat-label>
         <mat-select [(ngModel)]="selectedTargetCurrencies" multiple>
-          <mat-option [disabled]="selectedTargetCurrencies.length >= 3" *ngFor="let target of workingHistoricalCurrencies" [value]="target">
+          <mat-option
+            [disabled]="selectedTargetCurrencies.length >= 3"
+            *ngFor="let target of workingHistoricalCurrencies"
+            [value]="target"
+          >
             {{ target }}
           </mat-option>
         </mat-select>
@@ -23,7 +27,13 @@
 
       <div class="reset-button-container">
         <!-- <button mat-raised-button color="accent" (click)="selectAllTargetCurrencies()">Select All</button> -->
-        <button mat-raised-button color="warn" (click)="resetTargetCurrencies()">Reset Target Currencies</button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="resetTargetCurrencies()"
+        >
+          Reset Target Currencies
+        </button>
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -40,7 +50,13 @@
       </mat-form-field>
 
       <div class="button-container">
-        <button mat-raised-button color="primary" (click)="loadHistoricalData()">Load Chart</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="loadHistoricalData()"
+        >
+          Load Chart
+        </button>
       </div>
     </div>
   </mat-card>

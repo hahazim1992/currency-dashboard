@@ -22,7 +22,9 @@ describe('HistoricalTrendsComponent', () => {
   let mockExchangeRateService: jasmine.SpyObj<ExchangeRateService>;
 
   beforeEach(async () => {
-    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', ['getHistoricalData']);
+    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', [
+      'getHistoricalData',
+    ]);
 
     await TestBed.configureTestingModule({
       declarations: [HistoricalTrendsComponent],
@@ -100,29 +102,31 @@ describe('HistoricalTrendsComponent', () => {
     spyOn(window, 'alert');
     component.selectedDate = '';
     component.selectedTargetCurrencies = ['EUR', 'GBP'];
-  
+
     component.loadHistoricalData();
-  
+
     expect(window.alert).toHaveBeenCalledWith('Please select a date.');
   });
-  
+
   it('should alert if no target currencies are selected', () => {
     spyOn(window, 'alert');
     component.selectedDate = '2025-05-05';
     component.selectedTargetCurrencies = [];
-  
+
     component.loadHistoricalData();
-  
-    expect(window.alert).toHaveBeenCalledWith('Please select at least one target currency.');
+
+    expect(window.alert).toHaveBeenCalledWith(
+      'Please select at least one target currency.'
+    );
   });
-  
+
   it('should call getHistoricalData with correct parameters and renderChart', () => {
     spyOn(component, 'renderChart');
     component.selectedDate = '2025-05-05';
     component.selectedTargetCurrencies = ['EUR', 'GBP'];
-  
+
     component.loadHistoricalData();
-  
+
     expect(mockExchangeRateService.getHistoricalData).toHaveBeenCalledWith(
       component.selectedBaseCurrencies,
       component.selectedTargetCurrencies,
@@ -142,17 +146,17 @@ describe('HistoricalTrendsComponent', () => {
     const canvas = document.createElement('canvas');
     canvas.id = 'historicalChart';
     document.body.appendChild(canvas);
-  
+
     spyOn(component, 'getRandomColor').and.returnValue('hsl(200, 70%, 60%)');
     component.renderChart(mockData);
-  
+
     expect(component.chart).toBeTruthy();
     expect(component.chart.data.labels).toEqual(['EUR', 'GBP']);
     expect(component.chart.data.datasets[0].data).toEqual([0.85, 0.75]);
     expect(component.chart.data.datasets[0].label).toBe(
       `Exchange Rate of ${component.selectedBaseCurrencies} on ${component.selectedDate}`
     );
-  
+
     document.body.removeChild(canvas);
   });
 });

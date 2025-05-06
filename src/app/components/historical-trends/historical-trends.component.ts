@@ -19,7 +19,31 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   chart: any;
 
   workingHistoricalCurrencies = [
-    'ZAR', 'TRY', 'RON', 'PLN', 'PHP', 'KRW', 'ISK', 'INR', 'ILS', 'IDR', 'HUF', 'HRK', 'HKD', 'GBP', 'EUR', 'DKK', 'CZK', 'CNY', 'CHF', 'CAD', 'BRL', 'BGN', 'AUD', 'MYR', 'USD'
+    'ZAR',
+    'TRY',
+    'RON',
+    'PLN',
+    'PHP',
+    'KRW',
+    'ISK',
+    'INR',
+    'ILS',
+    'IDR',
+    'HUF',
+    'HRK',
+    'HKD',
+    'GBP',
+    'EUR',
+    'DKK',
+    'CZK',
+    'CNY',
+    'CHF',
+    'CAD',
+    'BRL',
+    'BGN',
+    'AUD',
+    'MYR',
+    'USD',
   ];
 
   workingBaseCurrencies = [
@@ -49,7 +73,10 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
     'ZAR',
   ];
 
-  constructor(private exchangeRateService: ExchangeRateService, private datePipe: DatePipe) {}
+  constructor(
+    private exchangeRateService: ExchangeRateService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     // Set default to yesterday's date
@@ -84,10 +111,16 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
       alert('Please select at least one target currency.');
       return;
     }
-  
-    this.exchangeRateService.getHistoricalData(this.selectedBaseCurrencies, targets, this.selectedDate).subscribe((data) => {
-      this.renderChart(data);
-    });
+
+    this.exchangeRateService
+      .getHistoricalData(
+        this.selectedBaseCurrencies,
+        targets,
+        this.selectedDate
+      )
+      .subscribe((data) => {
+        this.renderChart(data);
+      });
   }
 
   onDateChange(event: any): void {
@@ -107,12 +140,14 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
         tension: 0.3,
       },
     ];
-  
+
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const canvas = document.getElementById('historicalChart') as HTMLCanvasElement;
+    const canvas = document.getElementById(
+      'historicalChart'
+    ) as HTMLCanvasElement;
     this.chart = new Chart(canvas, {
       type: 'line',
       data: { labels, datasets },
@@ -148,7 +183,7 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
   //   this.selectedTargetCurrencies = [...this.workingHistoricalCurrencies];
   // }
 
-  // TEMP: to test which BASE currencies are working 
+  // TEMP: to test which BASE currencies are working
   // loadHistoricalData(): void {
   //   const delay = 500; // 0.5 seconds delay
   //   this.totalHistoricalCurrencies.forEach((baseCurrency, index) => {
@@ -180,16 +215,168 @@ export class HistoricalTrendsComponent implements OnInit, OnDestroy {
 
   // list of currencies in latest but not all is working with historical API
   totalHistoricalCurrencies = [
-    'USD', 'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 
-    'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTN', 'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 
-    'CRC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'FOK', 'GBP', 
-    'GEL', 'GGP', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'IMP', 
-    'INR', 'IQD', 'IRR', 'ISK', 'JEP', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KID', 'KMF', 'KRW', 'KWD', 'KYD', 
-    'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRU', 'MUR', 
-    'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 
-    'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLE', 
-    'SLL', 'SOS', 'SRD', 'SSP', 'STN', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TVD', 'TWD', 
-    'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VES', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XCG', 'XDR', 'XOF', 'XPF', 'YER', 
-    'ZAR', 'ZMW', 'ZWL'
+    'USD',
+    'AED',
+    'AFN',
+    'ALL',
+    'AMD',
+    'ANG',
+    'AOA',
+    'ARS',
+    'AUD',
+    'AWG',
+    'AZN',
+    'BAM',
+    'BBD',
+    'BDT',
+    'BGN',
+    'BHD',
+    'BIF',
+    'BMD',
+    'BND',
+    'BOB',
+    'BRL',
+    'BSD',
+    'BTN',
+    'BWP',
+    'BYN',
+    'BZD',
+    'CAD',
+    'CDF',
+    'CHF',
+    'CLP',
+    'CNY',
+    'COP',
+    'CRC',
+    'CUP',
+    'CVE',
+    'CZK',
+    'DJF',
+    'DKK',
+    'DOP',
+    'DZD',
+    'EGP',
+    'ERN',
+    'ETB',
+    'EUR',
+    'FJD',
+    'FKP',
+    'FOK',
+    'GBP',
+    'GEL',
+    'GGP',
+    'GHS',
+    'GIP',
+    'GMD',
+    'GNF',
+    'GTQ',
+    'GYD',
+    'HKD',
+    'HNL',
+    'HRK',
+    'HTG',
+    'HUF',
+    'IDR',
+    'ILS',
+    'IMP',
+    'INR',
+    'IQD',
+    'IRR',
+    'ISK',
+    'JEP',
+    'JMD',
+    'JOD',
+    'JPY',
+    'KES',
+    'KGS',
+    'KHR',
+    'KID',
+    'KMF',
+    'KRW',
+    'KWD',
+    'KYD',
+    'KZT',
+    'LAK',
+    'LBP',
+    'LKR',
+    'LRD',
+    'LSL',
+    'LYD',
+    'MAD',
+    'MDL',
+    'MGA',
+    'MKD',
+    'MMK',
+    'MNT',
+    'MOP',
+    'MRU',
+    'MUR',
+    'MVR',
+    'MWK',
+    'MXN',
+    'MYR',
+    'MZN',
+    'NAD',
+    'NGN',
+    'NIO',
+    'NOK',
+    'NPR',
+    'NZD',
+    'OMR',
+    'PAB',
+    'PEN',
+    'PGK',
+    'PHP',
+    'PKR',
+    'PLN',
+    'PYG',
+    'QAR',
+    'RON',
+    'RSD',
+    'RUB',
+    'RWF',
+    'SAR',
+    'SBD',
+    'SCR',
+    'SDG',
+    'SEK',
+    'SGD',
+    'SHP',
+    'SLE',
+    'SLL',
+    'SOS',
+    'SRD',
+    'SSP',
+    'STN',
+    'SYP',
+    'SZL',
+    'THB',
+    'TJS',
+    'TMT',
+    'TND',
+    'TOP',
+    'TRY',
+    'TTD',
+    'TVD',
+    'TWD',
+    'TZS',
+    'UAH',
+    'UGX',
+    'UYU',
+    'UZS',
+    'VES',
+    'VND',
+    'VUV',
+    'WST',
+    'XAF',
+    'XCD',
+    'XCG',
+    'XDR',
+    'XOF',
+    'XPF',
+    'YER',
+    'ZAR',
+    'ZMW',
+    'ZWL',
   ];
 }

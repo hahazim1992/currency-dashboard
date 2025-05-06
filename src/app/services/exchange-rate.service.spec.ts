@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { ExchangeRateService } from './exchange-rate.service';
 
 describe('ExchangeRateService', () => {
@@ -71,7 +74,9 @@ describe('ExchangeRateService', () => {
     });
 
     const targetStr = targets.join(',');
-    const req = httpMock.expectOne(`${apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`);
+    const req = httpMock.expectOne(
+      `${apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`
+    );
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse); // Simulate a successful response
   });

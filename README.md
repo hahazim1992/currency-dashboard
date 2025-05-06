@@ -42,6 +42,11 @@ at the root of the project
 - npx jest --coverage
 - at folder explorer, goto root > server > coverage > right click (index.html) > copy path > pate in google chrome > inspect unit test coverage
 
+## run prettier
+
+at the root of the project
+- npm run format
+
 
 
 

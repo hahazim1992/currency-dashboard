@@ -18,7 +18,9 @@ describe('CurrencyConverterComponent', () => {
   let mockExchangeRateService: jasmine.SpyObj<ExchangeRateService>;
 
   beforeEach(async () => {
-    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', ['getExchangeRates']);
+    mockExchangeRateService = jasmine.createSpyObj('ExchangeRateService', [
+      'getExchangeRates',
+    ]);
 
     await TestBed.configureTestingModule({
       declarations: [CurrencyConverterComponent],
@@ -124,7 +126,9 @@ describe('CurrencyConverterComponent', () => {
 
   it('should disable the Convert button if the form is invalid', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const convertButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const convertButton = compiled.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
 
     component.converterForm.setValue({
       amount: null,
