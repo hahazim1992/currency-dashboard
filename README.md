@@ -29,7 +29,7 @@ at the root of the project
 at the root of the project
 - npm run start
 
-## run unit test FE Jasmine Karma
+# run unit test FE Jasmine Karma
 
 at the root of the project
 - npm run start
@@ -46,6 +46,57 @@ at the root of the project
 
 at the root of the project
 - npm run format
+
+## assessment checklist + developer comments
+
+- ✅ - DONE
+- ❌ - NOT DONE / CAN'T BE DONE
+- 🗯️ - DEVELOPER NOTES
+
+#
+
+- ✅ Fetch real-time exchange rates from a public API (e.g., ExchangeRate-API)
+- ✅ Display rates in a sortable table with columns for currency code, exchange rate, and base currency.
+#
+- ✅ Allow users to compare exchange rate trends for up to 3 selected currencies over the past month.
+- 🗯️: can compare 3 currencies in a particular date instead of over the past month
+#
+- ❌ Use a toggle to switch between daily, weekly, and monthly data aggregation for the chart.
+- 🗯️: unable to do this because historical API can only support params (#1 - base currency) (#2 - can select up to 3 currencies) (#3 - a singular date for the history of currency rate)
+#
+- ✅ Display the trend as a dynamic chart using a library like Chart.js or D3.js.
+- 🗯️: using chart.js
+#
+- ✅ Include a section where users can input an amount and two currencies to calculate the equivalent value based on the latest exchange rates.
+- ✅ Implement filtering by currency and a search bar to quickly find specific currencies.
+#
+- ❌ Use WebSockets or a polling mechanism to refresh exchange rates in real time.
+- ❌ Optimize polling intervals to reduce API calls without compromising user experience.
+- 🗯️: currently not using any DB, havent check the feasibility
+#
+- ✅ Cache the last fetched exchange rates and historical data in IndexedDB or localStorage.
+- 🗯️: this is available in exchange rates page (landing page). We are using localStorage. you may use offline mode button i provoided, OR, go to historical page > disconnect your internet > navigate back to exchange rates > observe it detects as you dont have connectivity and will fetch from localStorage earlier when you had internet
+#
+- ✅ Allow users to interact with cached data when offline, with a clear indication that data is not live.
+#
+- ✅ Provide a toggle for switching between light and dark themes.
+- 🗯️: find the toggle in the sticky menu in the top of your screen of the icon on the most far right
+#
+- ✅ Organize the code using modular architecture.
+- 🗯️: using BE nodejs and mono repo
+#
+- ✅ Write unit tests for services, components, and utilities using Jasmine and Karma.
+- 🗯️ refer:
+- Goto section [run unit test FE Jasmine Karma]
+- Goto section [run unit test BE Jest Babel]
+#
+- ❌ Implement E2E tests using Cypress or Protractor to cover key user interactions.
+- 🗯️: not implemented yet
+#
+- ❌ Include a basic CI/CD pipeline script to lint, test, build, and deploy the application to a staging environment.
+- 🗯️: not implemented yet
+#
+- ✅ Provide a README.md file with setup instructions, architecture decisions, and usage details.
 
 
 
