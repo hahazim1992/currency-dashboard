@@ -5,14 +5,18 @@
     <div class="controls">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Base Currency</mat-label>
-        <input matInput type="text" [(ngModel)]="baseCurrency" placeholder="e.g., USD" />
+        <mat-select [(ngModel)]="selectedBaseCurrencies">
+          <mat-option *ngFor="let base of workingBaseCurrencies" [value]="base">
+            {{ base }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Target Currencies (max 3)</mat-label>
-        <mat-select [(ngModel)]="selectedCurrencies" multiple [disabled]="selectedCurrencies.length >= 3">
-          <mat-option [disabled]="selectedCurrencies.length >= 3" *ngFor="let currency of workingHistoricalCurrencies" [value]="currency">
-            {{ currency }}
+        <mat-select [(ngModel)]="selectedTargetCurrencies" multiple>
+          <mat-option [disabled]="selectedTargetCurrencies.length >= 3" *ngFor="let target of workingHistoricalCurrencies" [value]="target">
+            {{ target }}
           </mat-option>
         </mat-select>
       </mat-form-field>

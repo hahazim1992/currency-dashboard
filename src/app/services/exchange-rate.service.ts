@@ -21,7 +21,6 @@ export class ExchangeRateService {
   getHistoricalData(base: string, targets: string[], date: string): Observable<any> {
     const targetStr = targets.join(',');
     const url = `${this.apiUrl}/historical-data?base=${base}&targets=${targetStr}&date=${date}`;
-    console.log('Request URL:', url); // Debugging
     return this.http.get(url);
   }
 }
