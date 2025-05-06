@@ -75,7 +75,7 @@ at the root of the project
 - 🗯️: currently not using any DB, havent check the feasibility
 #
 - ✅ Cache the last fetched exchange rates and historical data in IndexedDB or localStorage.
-- 🗯️: this is available in exchange rates page (landing page). We are using localStorage. you may use offline mode button i provoided, OR, go to historical page > disconnect your internet > navigate back to exchange rates > observe it detects as you dont have connectivity and will fetch from localStorage earlier when you had internet
+- 🗯️: this is available ONLY in exchange rates page (landing page). We are using localStorage. you may use offline mode button i provoided, OR, go to historical page > disconnect your internet > navigate back to exchange rates > observe it detects as you dont have connectivity and will fetch from localStorage earlier when you had internet
 #
 - ✅ Allow users to interact with cached data when offline, with a clear indication that data is not live.
 #
