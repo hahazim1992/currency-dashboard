@@ -9,7 +9,7 @@ describe('ExchangeRateService', () => {
   let service: ExchangeRateService;
   let httpMock: HttpTestingController;
 
-  const apiUrl = 'http://localhost:3000';
+  const apiUrl = 'https://currency-dashboard-7kgm.onrender.com';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

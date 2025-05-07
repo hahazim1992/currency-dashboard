@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ExchangeRateService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://currency-dashboard-7kgm.onrender.com';
 
   constructor(private http: HttpClient) {}
 
