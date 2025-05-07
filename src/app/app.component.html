@@ -1,18 +1,16 @@
-<mat-toolbar color="primary" class="mat-elevation-z4">
-  <span>Currency Dashboard</span>
-  <span class="spacer"></span>
-  <a mat-button routerLink="/exchange-rates" routerLinkActive="active-link"
-    >Exchange Rates</a
-  >
-  <a mat-button routerLink="/historical-trends" routerLinkActive="active-link"
-    >Historical Trends</a
-  >
-  <a mat-button routerLink="/currency-converter" routerLinkActive="active-link"
-    >Currency Converter</a
-  >
-  <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme">
-    <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
-  </button>
+<mat-toolbar color="primary" class="mat-elevation-z4 responsive-toolbar">
+  <div class="toolbar-content">
+    <span>Currency Dashboard</span>
+    <span class="spacer"></span>
+    <div class="button-container">
+      <a mat-button routerLink="/exchange-rates" routerLinkActive="active-link">Exchange Rates</a>
+      <a mat-button routerLink="/historical-trends" routerLinkActive="active-link">Historical Trends</a>
+      <a mat-button routerLink="/currency-converter" routerLinkActive="active-link">Currency Converter</a>
+    </div>
+    <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme">
+      <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

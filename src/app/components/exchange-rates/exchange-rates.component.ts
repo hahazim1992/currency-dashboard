@@ -61,7 +61,7 @@ export class ExchangeRatesComponent
     interval(3000)
       .pipe(
         takeUntil(this.destroy$),
-        take(5),
+        take(2),
         switchMap(() => this.exchangeRateService.getExchangeRates())
       )
       .subscribe((data) => {
