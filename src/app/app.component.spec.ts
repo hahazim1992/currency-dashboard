@@ -91,10 +91,13 @@ describe('AppComponent', () => {
   it('should display the correct icon based on the theme', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const icon = compiled.querySelector('mat-icon');
-    expect(icon?.textContent).toBe('dark_mode');
+
+    expect(icon?.textContent?.trim()).toBe('dark_mode');
 
     component.toggleTheme();
     fixture.detectChanges();
-    expect(icon?.textContent).toBe('light_mode');
+
+    const updatedIcon = compiled.querySelector('mat-icon');
+    expect(updatedIcon?.textContent?.trim()).toBe('light_mode');
   });
 });
